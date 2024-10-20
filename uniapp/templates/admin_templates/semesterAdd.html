@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert"  role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Semester</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{department}}</li>
+                        <li class="breadcrumb-item active">Semester Add</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.semester.label}}</label>
+                                        {{form.semester}}
+                                        <div class="text-danger">
+                                        {{form.semester.errors}}
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

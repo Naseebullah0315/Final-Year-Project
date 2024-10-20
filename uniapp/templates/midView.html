@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">Mid View</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item active">{{student}}</li>
+            <li class="breadcrumb-item active">{{subject_name}}</li>
+            <li class="breadcrumb-item active">Mid Marks View</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-center mb-0 datatable">
+                <thead>
+                  <tr>
+                    <th>Total Marks</th>
+                    <th>Obtained Marks</th>
+                    {% if request.user.teacher and request.user.teacher.is_sub_admin != True and marks_visible != True or request.user.teacher and  request.user.teacher.is_sub_admin == True and marks_visible != True and hod_check == True or request.user.is_superuser %}
+                    <th class="text-right">Action</th>
+                    {% endif %}
+                  </tr>
+                </thead>
+                {% for mid in mid %}
+                <tbody>
+                  <tr>
+                    <td>{{mid.total_marks}}</td>
+                    <td>{{mid.marks}}</td>
+                    <td class="text-right">
+                      {% if request.user.teacher and request.user.teacher.is_sub_admin != True and marks_visible != True or request.user.teacher and  request.user.teacher.is_sub_admin == True and marks_visible != True and hod_check == True or request.user.is_superuser %}
+                      <div class="actions">
+                        <a href="{% url 'uniapp:midUpdate' mid.id %}" class="btn btn-sm bg-success-light mr-2">
+                          <i class="fas fa-pen"></i>
+                        </a>
+                        <a href="{% url 'uniapp:midDelete' mid.id %}" class="btn btn-sm bg-danger-light">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </div>
+                      {% endif %}
+                    </td>
+
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert"  role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Subject</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{department}}</li>
+                        <li class="breadcrumb-item active">Add Subject</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="row">
+                                {% csrf_token %}
+                                {{form.non_field_errors}}
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.subject_code.label}}</label>
+                                        {{form.subject_code}}
+                                        {{form.subject_code.errors}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+
+                                        <label>{{form.subject_name.label}}</label>
+                                        {{form.subject_name}}
+                                        <div class="text-danger">
+                                        {{form.subject_name.errors}}
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+
+                                        <label>{{form.credit_hours.label}}</label>
+                                        {{form.credit_hours}}
+                                        {{form.credit_hours.errors}}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="btn btn-primary" type="submit">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert"  role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Subject Allocation</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="text-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                            <div class="row">
+                                
+                                
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.subject.label}}</label>
+                                        {{form.subject}}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.teacher.label}}</label>
+                                        {{form.teacher}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.semester.label}}</label>
+                                        {{form.semester}}
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

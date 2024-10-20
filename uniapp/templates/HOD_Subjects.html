@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">My Subjects</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">Allocated Subject List</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-five w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>{{subjects_count}}</h3>
+                                <h6>Total Subjects</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Subjects</th>
+                                        <th>Department</th>
+                                        <th>Semester</th>
+                                    </tr>
+                                </thead>
+                                {% for subject in subjects %}
+                                <tbody>
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                {{subject.subject}}
+                                            </h2>
+                                            <td>{{subject.department}}</td>
+                                            <td>
+                                                <h2 class="table-avatar">
+                                                    <a href="{% url 'uniapp:studentlist' subject.semester.id %}">{{subject.semester}}</a>
+                                                </h2>
+                                            </td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

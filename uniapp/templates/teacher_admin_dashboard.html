@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert"  role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Welcome {{request.user.teacher.teacher_name}}!</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                        <li class="breadcrumb-item active">HOD Dashboard</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-five w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>{{teacher_count}}</h3>
+                                <h6>Total Teachers</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-six w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>{{student_count}}</h3>
+                                <h6>Total Students</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-seven w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>{{subject_count}}</h3>
+                                <h6>Total Subjects</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-eight w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>15/20</h3>
+                                <h6>Total Hours</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

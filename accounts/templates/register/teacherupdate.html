@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Teacher</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                        <li class="breadcrumb-item active">Update Teacher</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="row">
+                            {% csrf_token %}
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.user_id.label}}</label>
+                                    {{form.user_id}}
+                                    <!-- <div class="text-danger">
+                                    {{form.user_id.errors}}
+                                </div> -->
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.teacher_name.label}}</label>
+                                    {{form.teacher_name}}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.email.label}}</label>
+                                    {{form.email}}
+                                    <!-- <div class="text-danger">
+                                    {{form.email.errors}}
+                                </div> -->
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.phone_number.label}}</label>
+                                    {{form.phone_number}}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.is_sub_admin.label}}</label>
+                                    {{form.is_sub_admin}}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

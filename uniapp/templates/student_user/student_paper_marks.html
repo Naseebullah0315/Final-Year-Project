@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% if student_semester == subject_semester and marks == True or student_semester != subject_semester %}
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Total Marks</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{subject_name}}</li>
+                        <li class="breadcrumb-item active">Total Marks View</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <!-- <th>Assignment</th>
+                                        <th>Quiz</th>
+                                        <th>Presentation</th>
+                                        <th>Mid</th>
+                                        <th>Final</th> -->
+                                        <!-- <th>Credit Hours</th> -->
+                                        <th>Marks(100)</th>
+                                        <th>Grade Points</th>
+                                        <th>Quality Points</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                {% for result in results %}
+                                <tbody>
+                                    <tr>
+                                        <!-- <td>{{assignment_marks}}</td>
+                                        <td>{{quiz_marks}}</td>
+                                        <td>{{presentation_marks}}</td>
+                                        <td>{{mid_marks}}</td> -->
+                                        <!-- <td>{{final_marks}}</td> -->
+                                        <!-- <td>{{rescredit_hoSurs}}</td> -->
+                                        <td>{{result.marks}}</td>
+                                        <td>{{result.gp}}</td>
+                                        <td>{{result.qp}}</td>
+                                        <td>{{result.grade}}</td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% else %}
+        <h1>Your Result Not Ready Yet</h1>
+{% endif %}
+    </div>
+</div>
+
+{% endblock body %}

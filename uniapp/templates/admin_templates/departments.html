@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Departments</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">Departments List</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-five w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-chalkboard"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>{{department_count}}</h3>
+                                <h6>Total Departments</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Student List</th>
+                                        <th>Graduates</th>
+                                        <th>Add Subject</th>
+                                        <th>Subjects List</th>
+                                        <th>Add Semester</th>
+                                        <th>Teachers List</th>
+                                        <th class="text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                {% for department in departments %}
+                                <tbody>
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a
+                                                    href="{% url 'uniapp:semesterlist' department.id %}">{{department.depart_name}}</a>
+                                            </h2>
+                                        <td>
+                                            <a href="{% url 'uniapp:adminallstudentlist' department.id %}" class="btn btn-primary"><i class="fas fa-user-graduate"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'uniapp:admingraduatestudentslist' department.id %}" class="btn btn-primary"><i class="fas fa-user-graduate"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'uniapp:adminSubjectCreate' department.id %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'uniapp:adminSubjectList' department.id %}" class="btn btn-primary"><i class="fas fa-list"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'uniapp:semesterAdd' department.id %}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:adminteacherlist' department.id %}" class="btn btn-primary">
+                                            <i class="fas fa-chalkboard-teacher"></i></a>
+                                        </h2>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a href="{% url 'uniapp:departmentUpdate' department.id %}"
+                                                    class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <a href="{% url 'uniapp:departmentDelete' department.id %}"
+                                                    class="btn btn-sm bg-danger-light">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

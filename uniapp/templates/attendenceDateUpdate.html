@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Attendance Date</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">Attendance Date Update</li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.attendence_date.label}}</label>
+
+                                    {{form.attendence_date}}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

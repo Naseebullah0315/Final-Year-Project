@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Attendance Subjects</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{semester.department}}</li>
+                        <li class="breadcrumb-item active">{{semester}} Semester</li>
+                        <li class="breadcrumb-item active">Attendance Subject List</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+
+                                    </tr>
+                                </thead>
+                                {% for subject in subjects %}
+                                {% if subject.teacher != None %}
+                                  
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a
+                                                    href="{% url 'uniapp:Student_Attendance' subject.id %}">{{subject.subject}}</a>
+                                            </h2>
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                                {% endif %}
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

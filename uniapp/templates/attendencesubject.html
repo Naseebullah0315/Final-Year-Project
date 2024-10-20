@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">Attendance Subjects View</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item active">{{department}}</li>
+            <li class="breadcrumb-item active">{{semester}} Semester</li>
+            <li class="breadcrumb-item active">Attendance Subject List</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-five w-100">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-icon">
+                <i class="fas fa-chalkboard"></i>
+              </div>
+              <div class="db-info">
+                <h3>{{subject_count}}</h3>
+                <h6>Total Subjects</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table">
+          <div class="card-body">
+            <div class="table-responsive">
+
+
+              {% if request.user.teacher.is_sub_admin or request.user.is_superuser %}
+              
+              <table class="table table-hover table-center mb-0 datatable">
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                    <th>Department</th>
+                    <th>Semester</th>
+                    <th class="text-right">Action</th>
+                  </tr>
+                </thead>
+                {% for subject in subjects %}
+                <tbody>
+                  <tr>
+                    <td>
+                      <h2 class="table-avatar">
+                        <a href="{% url 'uniapp:attendencedate' subject.id %}">{{subject.subject}}</a>
+                      </h2>
+                    </td>
+
+                    <td>{{subject.department}}</td>
+                    <td>{{subject.semester}}</td>
+                    <td class="text-right">
+                      <div class="actions">
+                        <a href="" class="btn btn-sm bg-success-light mr-2">
+                          <i class="fas fa-pen"></i>
+                        </a>
+                        <a href="" class="btn btn-sm bg-danger-light">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+
+                  </tr>
+                </tbody>
+               
+                {% endfor %}
+              </table>
+              {% else %}
+              <table class="table table-hover table-center mb-0 datatable">
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                  </tr>
+                </thead>
+                {% for subject in subjects %}
+                
+                <tbody>
+                  <tr>
+                    <td>
+                      <h2 class="table-avatar">
+                        <a href="{% url 'uniapp:attendencedate' subject.id %}">{{subject.subject}}</a>
+                      </h2>
+                    </td>
+                  </tr>
+                </tbody>
+                
+                {% endfor %}
+              </table>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

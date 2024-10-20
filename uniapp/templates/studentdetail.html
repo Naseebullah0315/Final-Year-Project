@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <h3 class="page-title">Student Details</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="students.html">Student</a></li>
+                        <li class="breadcrumb-item active">Student Details</li>
+                    </ul>
+                    <div class="col-auto text-right float-right ml-auto">
+                        <a href="{% url 'uniapp:AssessmentSubject' student.id %}" class="btn btn-outline-primary mr-2">
+                            Marks View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="about-info">
+                            <h4>About Me</h4>
+                            <div class="media mt-3">
+                                <img src="{{student.profile_pic.url}}" class="mr-3" alt="...">
+                                <div class="media-body">
+                                    <ul>
+                                        <li>
+                                            <span class="title-span">Student ID : </span>
+                                            <span class="info-span">{{student.user_id}}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Name : </span>
+                                            <span class="info-span">{{student.student_name}}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span"> Department: </span>
+                                            <span class="info-span">{{student.student_department}}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span"> Semester: </span>
+                                            <span class="info-span">{{student.student_semester}}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span"> Session: </span>
+                                            <span
+                                                class="info-span">{{student.session}}-{{student.addmission_year}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-table my-3">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <h2>View Attendance</h2>
+                                    {% if request.user.teacher.is_sub_admin and hod_check != True or request.user.is_superuser %}
+
+                                    <table class="table table-hover table-center mb-0 datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject</th>
+                                                <!-- <th>Teacher</th> -->
+
+                                            </tr>
+                                        </thead>
+                                        {% for subject in subjects_hod %}
+                                        {% if subject.teacher != None %}
+
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a
+                                                            href="{% url 'uniapp:studentattendencedate' subjectallocationmodel_id=subject.id student_id=student.id %}">{{subject.subject}}</a>
+                                                    </h2>
+                                                </td>
+                                                <td>{{subject.teacher}}</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                    {% else %}
+                                    <table class="table table-hover table-center mb-0 datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Subject</th>
+                                                <th>Semester</th>
+
+                                            </tr>
+                                        </thead>
+                                        {% for subject in subjects %}
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a
+                                                            href="{% url 'uniapp:studentattendencedate' subjectallocationmodel_id=subject.id student_id=student.id %}">{{subject.subject}}</a>
+                                                    </h2>
+                                                </td>
+                                                <td>{{subject.semester}}</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

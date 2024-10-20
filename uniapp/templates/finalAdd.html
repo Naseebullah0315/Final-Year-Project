@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Final Marks Add</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{student}}</li>
+                        <li class="breadcrumb-item active">{{subject_name}}</li>
+                        <li class="breadcrumb-item active">Add Marks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST">
+                            <div class="row">
+                                {% csrf_token %}
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.marks.label}}</label>
+                                        {{form.marks}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.total_marks.label}}</label>
+                                        {{form.total_marks}}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

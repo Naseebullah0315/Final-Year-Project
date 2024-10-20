@@ -1,0 +1,105 @@
+input[type=checkbox].toggle {
+  display: none;
+}
+
+input[type=checkbox].toggle+label {
+  display: inline-block;
+  height: 45px;
+  width: 112px;
+  position: relative;
+  font-size: 15px;
+  border: 3px solid black;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  padding-left: 3px;
+}
+
+input[type=checkbox].toggle+label:before {
+  position: absolute;
+  top: 3px;
+  height: 34px;
+  width: 34px;
+  content: '';
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+input[type=checkbox].toggle+label:after {
+  width: 140px;
+  text-align: center;
+  z-index: 2;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translateY(-50%);
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+
+input[type=checkbox].toggle+label.rounded {
+  border-radius: 30px;
+}
+
+input[type=checkbox].toggle+label.rounded:before {
+  border-radius: 50%;
+}
+
+
+input[type=checkbox].toggle:not(:checked)+label {
+  background-color: red;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 5px;
+}
+
+input[type=checkbox].toggle:checked+label {
+  background-color: rgb(8, 254, 0);
+  text-align: right;
+}
+
+input[type=checkbox].toggle:not(:checked)+label:after {
+  content: attr(data-unchecked);
+  right: 0;
+  left: 10px;
+  opacity: 1;
+  color: white;
+
+}
+
+input[type=checkbox].toggle:not(:checked)+label:before {
+  left: 4px;
+  background-color: rgb(8, 254, 0);
+}
+
+input[type=checkbox].toggle:checked+label {
+  text-align: left;
+  border-color: black;
+  padding-top: 10px;
+
+}
+
+input[type=checkbox].toggle:checked+label:after {
+  content: attr(data-checked);
+  left: 4px;
+  right: 4px;
+  opacity: 1;
+  column-rule: green;
+}
+
+input[type=checkbox].toggle:checked+label:before {
+  left: 70px;
+  background-color: red;
+}
+
+.profile_pic {
+  width: 100%;
+  height: 100%;
+  transition: scale 400ms;
+}
+
+.profile_pic:hover {
+  scale: 400%;
+}

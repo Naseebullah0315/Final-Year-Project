@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert"  role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+      <div class="page-header">
+         <div class="row">
+            <div class="col">
+               <h3 class="page-title">Profile</h3>
+               <ul class="breadcrumb">
+                  {% if request.user.teacher.is_sub_admin %}
+                  <li class="breadcrumb-item active">HOD</li>
+                  <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                  {% elif request.user.student %}
+                  <li class="breadcrumb-item active">{{request.user.student.student_department}}</li>
+                  <li class="breadcrumb-item active">{{request.user.student.student_semester}} Semester</li>
+                  <li class="breadcrumb-item active">Student</li>
+                  {% elif request.user.teacher %}
+                  <li class="breadcrumb-item active">Teacher</li>
+                  <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                  {% endif %}
+                  <li class="breadcrumb-item active">Profile</li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <div class="profile-header">
+               <div class="row align-items-center">
+                  <div class="col-auto profile-image">
+                     <a href="{{request.user.profile_pic.url}}">
+                        <img class="rounded-circle" alt="User Image"
+                           src="{{request.user.profile_pic}}">
+                     </a>
+                  </div>
+                  <div class="col ml-md-n2 profile-user-info">
+                     {% if request.user.teacher %}
+                     <h4 class="user-name mb-0">{{request.user.teacher.teacher_name}}</h4>
+                     {% elif request.user.student %}
+                     <h4 class="user-name mb-0">{{request.user.student.student_name}}</h4>
+                     {% elif request.user.is_superuser %}
+                     <h6 class="user-name mb-0">Admin</h6>    
+                     {% endif %}
+                     {% if request.user.teacher %}
+                     <h6 class="text-muted">{{request.user.teacher.teacher_department}}</h6>
+                     {% elif request.user.student %}
+                     <h6 class="text-muted">{{request.user.student.student_department}}</h6>                     
+                                      
+                     {% endif %}
+                     <div class="user-Location"><i class="fas fa-map-marker-alt"></i> Florida, United States</div>
+                     <div class="about-text">Lorem ipsum dolor sit amet.</div>
+                  </div>
+                  <div class="col-auto profile-btn">
+                     <a href="{% url 'uniapp:ProfilePicChange' pk=user.id %}" class="btn btn-primary">
+                        Edit
+                     </a>
+                  </div>
+               </div>
+            </div>
+
+            <div class="tab-content profile-tab-cont">
+               <div class="" id="per_details_tab">
+                  <div class="row">
+                     <div class="col-lg-9">
+                        <div class="card">
+                           <div class="card-body">
+                              <h5 class="card-title d-flex justify-content-between">
+                                 <span>Personal Details</span>
+                              </h5>
+                              {% if request.user.teacher %}
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
+                                 <p class="col-sm-9">{{request.user.teacher.teacher_name}}</p>
+                              </div>
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">ID</p>
+                                 <p class="col-sm-9">{{request.user.teacher.user_id}}</p>
+                              </div>
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Department</p>
+                                 <p class="col-sm-9">{{request.user.teacher.teacher_department}}</p>
+                              </div>
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
+                                 <p class="col-sm-9">{{request.user.teacher.phone_number}}</p>
+                              </div>
+                              {% elif request.user.student %}
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
+                                 <p class="col-sm-9">{{request.user.student.student_name}}</p>
+                              </div>
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">ID</p>
+                                 <p class="col-sm-9">{{request.user.student.user_id}}</p>
+                              </div>
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Department</p>
+                                 <p class="col-sm-9">{{request.user.student.student_department}}</p>
+                              </div>
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
+                                 <p class="col-sm-9">{{request.user.student.phone_number}}</p>
+                              </div>
+                              {% elif request.user.is_superuser %}
+  
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">ID</p>
+                                 <p class="col-sm-9">{{request.user.user_id}}</p>
+                              </div>
+                              
+                              <div class="row">
+                                 <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
+                                 <p class="col-sm-9">{{request.user.phone_number}}</p>
+                              </div>
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+                    
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+{% endblock body %}

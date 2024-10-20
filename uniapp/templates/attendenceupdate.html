@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Update Attendance</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{student}}</li>
+                        <li class="breadcrumb-item active">{{subject}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>{{form.attendence_student.label}}</label>
+                                    {{form.attendence_student}}
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+
+                                    <label>{{form.attendence_status.label}}</label>
+                                    <input class="switch" type="checkbox" id="id_attendence_status"
+                                        name="attendence_status" 
+                                        {% if form.attendence_status.value == 'Present'%}
+                                        checked {% endif %}> 
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

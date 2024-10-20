@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <h2>Are You Sure You Want To Delete</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input class="btn btn-danger" type="submit" value="Delete">
+            <a input class="btn btn-primary" href="{% url 'uniapp:teacher' %}">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Assessments</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{student}}</li>
+                        <li class="breadcrumb-item active">{{subject}}</li>
+                        <li class="breadcrumb-item active">Assessments</li>
+                    </ul>
+                </div>
+                <div class="col-auto text-right float-right ml-auto">
+                    <a href="{% url 'uniapp:result' subjectallocationmodel_id %}" class="btn btn-outline-primary mr-2">
+                        Result</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Assessments</th>
+                                        {% if request.user.teacher == teacher and marks_visible != True %}
+                                        <th>Add Marks</th>
+                                        <th>View Marks</th>
+                                        {% else %}
+                                        <th>View Marks</th>
+                                        {% endif %}
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        
+                                        <td>Assignemts</td>
+                                        {% if request.user.teacher == teacher and marks_visible != True %}
+                                        <td>
+                                            <a href="{% url 'uniapp:assignmentAdd' subjectallocationmodel_id %}"
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        {% endif %}
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:assignmentView' subjectallocationmodel_id %}" class="btn btn-primary">
+                                            <i class="fa fa-eye"></i></a>
+                                        </h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quiz</td>
+                                        {% if request.user.teacher == teacher  and marks_visible != True %}
+                                        <td>
+                                            <a href="{% url 'uniapp:quizAdd' subjectallocationmodel_id %}" 
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        {% endif %}
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:quizView' subjectallocationmodel_id %}" class="btn btn-primary">
+                                            <i class="fa fa-eye"></i></a>
+                                        </h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Presentations</td>
+                                        {% if request.user.teacher == teacher  and marks_visible != True %}
+                                        <td>
+                                            <a href="{% url 'uniapp:presentationAdd' subjectallocationmodel_id %}"
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        {% endif %}
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:presentationView' subjectallocationmodel_id %}" class="btn btn-primary">
+                                            <i class="fa fa-eye"></i></a>
+                                        </h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mid</td>
+                                        {% if request.user.teacher == teacher  and marks_visible != True %}
+                                        <td>
+                                            <a href="{% url 'uniapp:midAdd' subjectallocationmodel_id %}"
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        {% endif %}
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:midView' subjectallocationmodel_id %}" class="btn btn-primary">
+                                            <i class="fa fa-eye"></i></a>
+                                        </h2>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Final</td>
+                                        {% if request.user.teacher == teacher  and marks_visible != True %}
+                                        <td>
+                                            <a href="{% url 'uniapp:finalAdd' subjectallocationmodel_id %}"
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        {% endif %}
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:finalView' subjectallocationmodel_id %}" class="btn btn-primary">
+                                            <i class="fa fa-eye"></i></a>
+                                        </h2>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

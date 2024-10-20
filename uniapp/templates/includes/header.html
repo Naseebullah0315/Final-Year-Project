@@ -1,0 +1,140 @@
+{% load static %}
+<div class="header">
+  <div class="header-left">
+    <a href=" {% if request.user.teacher.is_sub_admin and hod_check == True %}
+                {% url 'uniapp:teacher' %}
+                {% elif request.user.teacher.is_sub_admin and hod_check != True %}
+                {% url 'uniapp:teacher_admin_dashboard' %}
+                {% elif request.user.is_superuser %}
+                {% url 'uniapp:admin_dashboard' %}
+                {% elif request.user.teacher  %}
+                {% url 'uniapp:teacher' %}
+                {% elif request.user.student  %}
+                {% url 'uniapp:student_dashboard' %}
+                {% endif %} " class="logo">
+
+      <img src="
+        {% static 'assets/img/university_logo.png' %}" alt="Logo">
+    </a>
+    <a href="{% if request.user.teacher.is_sub_admin and hod_check != True %}
+              {% url 'uniapp:teacher_admin_dashboard' %}
+              {% elif request.user.teacher.is_sub_admin and hod_check == True %}
+              {% url 'uniapp:teacher' %}
+              {% elif request.user.is_superuser %}
+              {% url 'uniapp:admin_dashboard' %}
+              {% elif request.user.teacher  %}
+              {% url 'uniapp:teacher' %}
+              {% else %}
+              {% url 'uniapp:student_dashboard' %}
+              {% endif %} " class="logo logo-small">
+      <img src="{% static 'assets/img/uni-logo.JPEG' %}" alt="Logo" width="30" height="30">
+    </a>
+  </div>
+
+  <a href="javascript:void(0);" id="toggle_btn">
+    <i class="fas fa-align-left"></i>
+  </a>
+
+  <!-- <div class="top-nav-search">
+    <form>
+      <input type="text" class="form-control" placeholder="Search here">
+      <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </div> -->
+
+
+  <a class="mobile_btn" id="mobile_btn">
+    <i class="fas fa-bars"></i>
+  </a>
+
+<style>
+.switchLabel{
+  cursor: pointer;
+  color: rgb(8, 228, 8);
+}
+.check_class{
+  padding-bottom: 10px;
+  margin-top: 10px;
+}
+</style>
+  <ul class="nav user-menu">
+   
+    
+    <li class="nav-item dropdown has-arrow">
+      <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+        <span class="user-img"><img class="rounded-circle" src="{{request.user.profile_pic.url}}" width="31"></span>
+      </a>
+      <div class="dropdown-menu">
+        <div class="user-header">
+          <div class="avatar avatar-sm">
+            <img src="{{request.user.profile_pic.url}}" alt="User Image" class="user-img rounded-circle">
+          </div>
+          <div class="user-text">
+            <h6>{{request.user.teacher.teacher_name}}</h6>
+            {% if request.user.teacher.is_sub_admin %}
+            <p class="text-muted mb-0">HOD {{request.user.teacher.teacher_department}}</p>
+            {% else %}
+            <p class="text-muted mb-0">{{request.user.teacher.teacher_department}}</p>
+            {% endif %}
+            <div class=" check_class">
+              {% if request.user.teacher.is_sub_admin %}
+              <label class="switchLabel" for="show_allocated_subjects" id="switchLabel">
+                {% if hod_check %}Switch to HOD{% else %}Switch to Teacher{% endif %}
+            </label>
+              <input style="display: none;" type="checkbox" id="show_allocated_subjects" name="show_allocated_subjects" {% if show_allocated_subjects %}checked{% endif %}>
+            {% endif %}
+          </div>
+          </div>
+          
+        </div>
+        <a class="dropdown-item" href="{% url 'uniapp:profile' %}">My Profile</a>
+        <a class="dropdown-item" href="{% url 'passwordchange' %}">Change Password</a>
+        
+        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+      </div>
+    </li>
+
+  </ul>
+
+</div>
+   
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const checkbox = document.getElementById('show_allocated_subjects');
+      const label = document.getElementById('switchLabel');
+      // Set initial checkbox state based on sessionStorage
+      checkbox.checked = sessionStorage.getItem('show_allocated_subjects') === 'true' || false;
+      const storedLabel = sessionStorage.getItem('switchLabel');
+
+      label.textContent = storedLabel || (checkbox.checked ? 'Switch to HOD' : 'Switch to Teacher');
+      checkbox.addEventListener('change', function () {
+          // Update the element with the checkbox value
+          
+          // Update sessionStorage when the checkbox state changes
+          const isChecked = this.checked;
+          label.textContent = isChecked ? 'Switch to HOD' : 'Switch to Teacher';
+          console.log('Before setting item');
+          sessionStorage.setItem('show_allocated_subjects', isChecked);
+          console.log('After setting item');
+          sessionStorage.setItem('switchLabel', label.textContent);
+          // Redirect to the teacher page if the checkbox is checked
+          if (isChecked) {
+              window.location.href = '{% url "uniapp:teacher" %}';
+          } else {
+              // Redirect to the teacher admin dashboard if the checkbox is unchecked
+              window.location.href = '{% url "uniapp:teacher_admin_dashboard" %}';
+          }
+
+          // Perform the session update via fetch if needed
+          fetch('{% url "uniapp:update_session" %}', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  'X-CSRFToken': '{{ csrf_token }}',
+              },
+              body: 'show_allocated_subjects=' + (isChecked ? 'on' : 'off'),  // Specify the checkbox value
+          });
+      });
+  });
+</script>
+

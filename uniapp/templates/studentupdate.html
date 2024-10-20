@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Sutdent</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                        <li class="breadcrumb-item active">Add Student</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" id="studentForm" data-semester-url="{% url 'uniapp:ajax_load_semesters' %}" novalidate>
+                            <div class="row">
+                                {% csrf_token %}
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.user_id.label}}</label>
+                                        {{form.user_id}}
+                                        <div class="text-danger">
+                                            {{form.user_id.errors}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.student_name.label}}</label>
+                                        {{form.student_name}}
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{ form.student_department.label }}</label>
+                                            {{ form.student_department }}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{ form.student_semester.label }}</label>
+                                            {{ form.student_semester }}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.session.label}}</label>
+                                        {{form.session}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.addmission_year.label}}</label>
+                                        {{form.addmission_year}}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#id_student_department').change(function(){
+            var url = $('#studentForm').attr('data-semester-url');
+            var departmentId = $(this).val();
+            $.ajax({
+                url: url,
+                data: {
+                    'student_department':departmentId
+                },
+                success:function(data){
+                    let html_data = `<option value="">---------</option>`;
+                    data.forEach(function(semester) {
+                        html_data += `<option value="${semester.pk}">${semester.semester}</option>`;
+                        
+                    });
+                    $('#id_student_semester').html(html_data);
+                },
+                complete: function() {
+                // Allow form submission after AJAX request completes
+                $('#studentForm').off('submit').submit();
+            }
+                
+            });
+            
+        });
+    });
+
+</script>
+
+{% endblock body %}
+
+    

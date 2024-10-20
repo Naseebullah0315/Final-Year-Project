@@ -1,0 +1,54 @@
+<h1>Add New Subject</h1>
+{% extends "base.html" %}
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <form method="POST">
+                            <div class="text-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                            <div class="row">
+                                {% csrf_token %}
+                                
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.subject.label}}</label>
+                                        {{form.subject}}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.teacher.label}}</label>
+                                        {{form.teacher}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.semester.label}}</label>
+                                        {{form.semester}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.department.label}}</label>
+                                        {{form.department}}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

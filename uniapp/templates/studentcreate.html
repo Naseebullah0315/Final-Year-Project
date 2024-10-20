@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        {% if request.user.teacher.is_sub_admin or request.user.is_superuser %}
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col my-3">
+                    <h3 class="page-title">Sutdent</h3>
+                    <ul class="breadcrumb">
+                        {% if request.user.teacher %}
+                        <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                        {% else %}
+                        <li class="breadcrumb-item active">Add Student</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data"  id="loadProvince" data-province-url="{% url 'uniapp:ajax_load_provinces' %}" data-district-url="{% url 'uniapp:ajax_load_districts' %}" novalidate>
+                            <div class="row">
+                                {% csrf_token %}
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.user_id.label}}</label>
+                                        {{form.user_id}}
+                                        {% if form.user_id.errors %}
+                                        <div class="text-danger">
+                                            {{ form.user_id.errors.0 }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.student_name.label}}</label>
+                                        {{form.student_name}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.father_name.label}}</label>
+                                        {{form.father_name}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.gender.label}}</label>
+                                        {{form.gender}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.cnic.label}}</label>
+                                        {{form.cnic}}
+                                        <div class="text-danger">
+                                            {{form.cnic.errors}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.nationality.label}}</label>
+                                        {{form.nationality}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.province.label}}</label>
+                                        {{form.province}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.district.label}}</label>
+                                        {{form.district}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.home_address.label}}</label>
+                                        {{form.home_address}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.mailing_address.label}}</label>
+                                        {{form.mailing_address}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.religion.label}}</label>
+                                        {{form.religion}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.dob.label}}</label>
+                                        {{form.dob}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.session.label}}</label>
+                                        {{form.session}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.addmission_year.label}}</label>
+                                        {{form.addmission_year}}
+                                        <div class="text-danger">
+                                            {{ form.addmission_year.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.profile_pic.label}}</label>
+                                        {{form.profile_pic}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.email.label}}</label>
+                                        {{form.email}}
+                                        <div class="text-danger">
+                                            {{ form.email.errors }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.phone_number.label}}</label>
+                                        {{form.phone_number}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.password1.label}}</label>
+                                        {{form.password1}}
+                                        <div class="text-danger">
+                                        {{ form.password1.errors }}
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{form.password2.label}}</label>
+                                        {{form.password2}}
+                                        <div class="text-danger">
+                                        {{ form.password2.errors }}
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-danger">
+            You ara not allowed to access this pages
+        </div>
+        {% endif %}
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    
+    // $(document).ready(function() {
+        $('#id_nationality').change(function(){
+            var url = $('#loadProvince').attr('data-province-url');
+            var countryId = $(this).val();
+            console.log('Every thing is working good')
+            $.ajax({
+                url: url,
+                data: {
+                    'nationality':countryId
+                },
+                success:function(data){
+                    let html_data = `<option value="">---------</option>`;
+                    data.forEach(function(province) {
+                        html_data += `<option value="${province.pk}">${province.name}</option>`;
+                        
+                        
+                    });
+                    console.log('Every thing is working good')
+                    $('#id_province').html(html_data);
+                },
+                complete: function() {
+                // Allow form submission after AJAX request completes
+                $('#loadProvince').off('submit').submit();
+            }
+                
+            });
+            
+        });
+        
+    $('#id_province').change(function(){
+        console.log('The Console is working fine')
+            var url = $('#loadProvince').attr('data-district-url');
+            var provinceId = $(this).val();
+            console.log('.......................')
+            $.ajax({
+                url: url,
+                data: {
+                    'province':provinceId
+                },
+                success:function(data){
+                    let html_data = `<option value="">---------</option>`;
+                    data.forEach(function(district) {
+                        html_data += `<option value="${district.pk}">${district.name}</option>`;
+                        
+                        
+                    });
+                    console.log('Every thing is working good')
+                    $('#id_district').html(html_data);
+                },
+                complete: function() {
+                // Allow form submission after AJAX request completes
+                $('#loadProvince').off('submit').submit();
+            }
+                
+            });
+            
+        });
+    // });
+
+
+</script>
+
+{% endblock body %}

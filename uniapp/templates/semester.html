@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Semester</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                        <li class="breadcrumb-item active">Semester List</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+
+                                    <tr>
+                                        <th>Semester</th>
+                                        <th>Add Student</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    {% for semes in semesters %}
+                                    {% if semes.semester != 'Graduate' %}
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="{% url 'uniapp:studentlist' semes.id %}">{{semes.semester}}</a>
+                                            </h2>
+                                        </td>
+
+                                        <td>
+                                            <a href="{% url 'uniapp:studentcreatesemester' semes.id %}"
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock body %}

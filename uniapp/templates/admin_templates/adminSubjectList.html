@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert"  role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <form action="#" method="post">
+            {% csrf_token %}
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="dateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dateModalLabel">Are You Sure You Want to Delete It</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">                   
+                                <button class="btn btn-outline-danger mr-2 my-3" type="submit"
+                                value="1">Delete</button>
+                                <button class="btn btn-outline-primary mr-2 my-3" type="button" data-dismiss="modal" aria-label="Close">
+                                    Cancel
+                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Subject</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">{{request.user.teacher.teacher_department}}</li>
+                        <li class="breadcrumb-item active">Subject List</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 col-12 d-flex">
+                <div class="card bg-five w-100">
+                    <div class="card-body">
+                        <div class="db-widgets d-flex justify-content-between align-items-center">
+                            <div class="db-icon">
+                                <i class="fas fa-chalkboard"></i>
+                            </div>
+                            <div class="db-info">
+                                <h3>{{subjects_count}}</h3>
+                                <h6>Total Subjects</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Course Code</th>
+                                        <th>Name</th>
+                                        <th>Credit Hours</th>
+                                        <th class="text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                {% for subject in subjects %}
+                                 <tbody>
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{subject.subject_code}}</td>
+                                        <td>{{subject.subject_name}}</td>
+                                        <td>{{subject.credit_hours}}</td>
+
+
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a href="{% url 'uniapp:subjectupdate' subject.id %}" class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <!-- <a href="{% url 'uniapp:subjectdelete' subject.id %}" class="btn btn-sm bg-success-light mr-2">
+                                                    <i class="fas fa-trash"></i>
+                                                </a> -->
+                                                <a href="#"
+                                                    class="btn btn-sm bg-danger-light" data-toggle="modal" data-target="#deleteModal">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                              
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

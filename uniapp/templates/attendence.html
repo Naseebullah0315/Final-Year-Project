@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    {% if request.user.teacher == teacher %}
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">Attendance</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item active">{{department}}</li>
+            <li class="breadcrumb-item active">{{semester}} Semester</li>
+            <li class="breadcrumb-item active">{{subject_name}}</li>
+            <li class="breadcrumb-item active">Mark Attendance</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-five w-100">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-icon">
+                <i class="fas fa-chalkboard"></i>
+              </div>
+              <div class="db-info">
+                <h3>{{student_count}}</h3>
+                <h6>Total Students</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table">
+          <div class="card-body">
+            <div class="table-responsive">
+              <form method="POST">
+                {% csrf_token %}
+                <input class="form-control" type="date" name="date" required>
+
+                <table class="table table-hover table-center mb-0 datatable">
+                  <thead>
+                    <tr>
+                      <th>Student Name</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for student in students %}
+                    <tr>
+                      <td> {{student.student_name}}</td>
+                      <td>
+                        <input class="toggle"  type="checkbox" id="rounded_{{student.id}}" name="present"
+                          value="{{student.id}}">
+                          <label class="rounded" for="rounded_{{student.id}}" data-checked="present" data-Unchecked="Absent"></label>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Submit">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <h4 class="btn btn-danger">YOU ARE NOT ALLOWED TO VISIT THIS PAGE BECAUSE YOU ARE NOT HIS MENTOR</h4>
+    {% endif %}
+  </div>
+</div>
+<style>
+ input[type=checkbox].toggle {
+  display: none;
+}
+
+input[type=checkbox].toggle+label {
+  display: inline-block;
+  height: 45px;
+  width: 112px;
+  position: relative;
+  font-size: 15px;
+  border: 3px solid black;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  padding-left: 3px;
+}
+
+input[type=checkbox].toggle+label:before {
+  position: absolute;
+  top: 3px;
+  height: 34px;
+  width: 34px;
+  content: '';
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+input[type=checkbox].toggle+label:after {
+  width: 140px;
+  text-align: center;
+  z-index: 2;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translateY(-50%);
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+}
+
+input[type=checkbox].toggle+label.rounded {
+  border-radius: 30px;
+}
+
+input[type=checkbox].toggle+label.rounded:before {
+  border-radius: 50%;
+}
+
+/* input[type=checkbox].toggle + label.andriod{
+  height: 20px;
+  border-radius: 30px;
+  width: 150px;
+  border-width: 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
+} */
+/* input[type=checkbox].toggle+label.andriod:before{
+  border-radius: 50%;
+  row-gap: -20px;
+  height: 60px;
+  width: 60px;
+  background-color: white;
+  box-shadow: 0 0 15px #333;
+} */
+/* input[type=checkbox].toggle + label.andriod:after{
+  display: none;
+} */
+/* input[type=checkbox].toggle + label.andriod:active:before{
+  box-sizing: 0 0 2px 15px rgba(48,48,48,0.7);
+  transition: all 0.1s ease;
+} */
+
+input[type=checkbox].toggle:not(:checked)+label {
+  background-color: red;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 5px;
+}
+
+input[type=checkbox].toggle:checked+label {
+  background-color: rgb(8, 254, 0);
+  text-align: right;
+}
+
+input[type=checkbox].toggle:not(:checked)+label:after {
+  content: attr(data-unchecked);
+  right: 0;
+  left: 10px;
+  opacity: 1;
+  color: white;
+
+}
+
+input[type=checkbox].toggle:not(:checked)+label:before {
+  left: 4px;
+  background-color: rgb(8, 254, 0);
+}
+
+/* input[type=checkbox].toggle:not(:checked) + label.andriod{
+  background-color: white;
+  border-color: black;
+} */
+/* input[type=checkbox].toggle:not(:checked) + label.andriod:before{
+  left: 0;
+  background-color: #ffffff;
+} */
+input[type=checkbox].toggle:checked+label {
+  text-align: left;
+  border-color: black;
+  padding-top: 10px;
+
+}
+
+input[type=checkbox].toggle:checked+label:after {
+  content: attr(data-checked);
+  left: 4px;
+  right: 4px;
+  opacity: 1;
+  column-rule: green;
+}
+
+input[type=checkbox].toggle:checked+label:before {
+  left: 70px;
+  background-color: red;
+}
+
+/* input[type=checkbox].toggle:checked + label.andriod{
+  background-color: white;
+  border-color: white;
+} */
+/* input[type=checkbox].toggle:checked + label.andriod:before{
+  right: auto;
+  left: 90px;
+} */
+
+
+.profile_pic {
+  width: 100%;
+  height: 100%;
+  transition: scale 400ms;
+}
+
+.profile_pic:hover {
+  scale: 400%;
+}
+</style>
+{% endblock body %}

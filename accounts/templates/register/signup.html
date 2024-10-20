@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    {% for msg in messages %}
+    <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert" role="alert">
+        {{msg}}
+    </div>
+    {% endfor %}
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">HOD Registration</h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+              <div class="row">
+                {% csrf_token %}
+                <div class="text-danger">
+                {{form.non_field_errors}}
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+
+                    <label>{{form.user_id.label}}</label>
+                    {{form.user_id}}
+                    <div class="text-danger">
+                    {{form.user_id.errors}}
+                  </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.teacher_name.label}}</label>
+                    {{form.teacher_name}}
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.teacher_department.label}}</label>
+                    {{form.teacher_department}}
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.email.label}}</label>
+                    {{form.email}}
+                    <div class="text-danger">
+                      {{form.email.errors}}
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.profile_pic.label}}</label>
+                    {{form.profile_pic}}
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.phone_number.label}}</label>
+                    {{form.phone_number}}
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.is_sub_admin.label}}</label>
+                    {{form.is_sub_admin}}
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.password1.label}}</label>
+                    {{form.password1}}
+                    <div class="text-danger">
+                    {{form.password1.errors}}
+                  </div>
+                </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                  <div class="form-group">
+                    <label>{{form.password2.label}}</label>
+                    {{form.password2}}
+                    <div class="text-danger">
+                    {{form.password2.errors}}
+                  </div>
+                  </div>
+                </div>
+              </div>
+                <button class="btn btn-primary">Register</button>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

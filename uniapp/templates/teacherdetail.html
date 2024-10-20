@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">Teacher Details</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="students.html">Teacher</a></li>
+            <li class="breadcrumb-item active">Teacher Details</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info">
+              <h4>About Me</h4>
+              <div class="media mt-3">
+                <img src="{{teacher.profile_pic.url}}" class="mr-3" alt="...">
+                <div class="media-body">
+                  <ul>
+                    <li>
+                      <span class="title-span">Teacher ID : </span>
+                      <span class="info-span">{{teacher.user_id}}</span>
+                    </li>
+                    <li>
+                      <span class="title-span">Name : </span>
+                      <span class="info-span">{{teacher.teacher_name}}</span>
+                    </li>
+                    <li>
+                      <span class="title-span"> Department: </span>
+                      <span class="info-span">{{teacher.teacher_department}}</span>
+                    </li>
+                    <li>
+                      <span class="title-span"> Department: </span>
+                      <span class="info-span">{{teacher.phone_number}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <h3 class="my-3">Allocated Subjects</h3>
+                <table class="table table-hover table-center mb-0 datatable">
+                  <thead>
+                    <tr>
+                      <th>Department</th>
+                      <th>Semester</th>
+                      <th>Subject</th>
+                      <th class="text-right">Action</th>
+                    </tr>
+                  </thead>
+                  {% for subject in allocated_subjects %}
+                  <tbody>
+                    <tr>
+                      <td>{{subject.department}}</td>
+                      <td>
+                        <h2 class="table-avatar">
+                            <a href="{% url 'uniapp:studentlist' subject.semester.id %}">{{subject.semester}}</a>
+                        </h2>
+                    </td>
+                      <td>{{subject.subject}}</td>
+                      <td class="text-right">
+                        <div class="actions">
+                          <a href="#" class="btn btn-sm bg-success-light mr-2">
+                            <i class="fas fa-pen"></i>
+                          </a>
+                          <a href="{% url 'uniapp:subjectallocationdelete' subject.id %}"
+                            class="btn btn-sm bg-danger-light">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

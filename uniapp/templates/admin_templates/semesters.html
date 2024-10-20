@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        {% for msg in messages %}
+        <div class="alert alert-success alert-dismissible fade show auto-dismiss-alert" role="alert">
+            {{msg}}
+        </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Semester</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active">Semester List</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            
+            <div class="col-auto text-right float-right ml-auto">
+                <a href="{% url 'uniapp:adminsubjectallocation' %}" class="btn btn-outline-primary mr-2 mb-3">
+                    Allocate Subject</a>
+            </div>
+           
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-center mb-0 datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Allcated Subjects List</th>
+                                        <th>Add Student</th>
+                                        
+                                    </tr>
+                                </thead>
+                                {% for semester in semesters %}
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a
+                                                    href="{% url 'uniapp:studentlist' semester.id %}">{{semester.semester}}</a>
+                                            </h2>
+                                        </td>
+
+                                        <td>
+                                            <a href="{% url 'uniapp:adminAllocatedSubjectsList' semester.id %}"
+                                                class="btn btn-primary"><i class="fa fa-list"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'uniapp:studentcreatesemester' semester.id %}"
+                                                class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

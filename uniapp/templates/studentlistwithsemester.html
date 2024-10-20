@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="page-title">Student</h3>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item active">{{semester.department}}</li>
+            <li class="breadcrumb-item active">{{semester}} Semester</li>
+            <li class="breadcrumb-item active">Student List</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-five w-100">
+          <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+              <div class="db-icon">
+                <i class="fas fa-chalkboard"></i>
+              </div>
+              <div class="db-info">
+                <h3>{{student_semester_count}}</h3>
+                <h6>Total Students</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto text-right float-right ml-auto">
+        {% if request.user.teacher.is_sub_admin or request.user.is_superuser %}
+        <a href="{% url 'uniapp:semesterattendenceview' semester.id %}?" class="btn btn-outline-primary mr-2">
+          View Attendance</a>
+        {% endif %}
+      </div>
+
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table">
+          <div class="card-body">
+            <div class="table-responsive">
+              {% if request.user.is_superuser %}
+              <input class="form-control" type="checkbox" id="selectAllCheckbox">
+              {% endif %}
+              <form method="get" action="{% url 'uniapp:update-semester' %}">
+              <table class="table table-hover table-center mb-0 datatable">
+                <thead>
+                  <tr>
+                    
+                    <th>Check</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    {% if request.user.is_superuser %}
+                    <th>Marks Visibility</th>
+                    {% endif %}
+                    {% if request.user.teacher.is_sub_admin and not hod_check or request.user.is_superuser %}
+                    <th class="text-right">Action</th>
+                    {% endif %}
+
+                  </tr>
+                </thead>
+                {% for student in students %}
+                <tbody>
+                  <tr>
+                    
+                    <td><input type="checkbox" name="selected_students" value="{{ student.id }}"></td>
+                    <td>{{student.user_id}}</td>
+                    <td>
+                      <style>
+                          .profile_pic{
+                            width: 100%;
+                            height: 100%;
+                            transition: scale 400ms;
+                          }
+                          .profile_pic:hover{
+                            scale: 400%;
+                          }
+                      </style>
+                      <h2 class="table-avatar">
+                        <a href="{% url 'uniapp:studentdetail' student.pk %}" class="avatar avatar-sm mr-2"><img
+                            class="profile_pic avatar-img rounded-circle" src="{{student.profile_pic.url}}"
+                            alt="User Image"></a>
+                        <a href="{% url 'uniapp:studentdetail' student.pk %}">{{student.student_name}}</a>
+                      </h2>
+                    </td>
+
+                    {% if request.user.is_superuser %}
+                    <td>
+                      <input class="form-control marksVisibilityCheckbox" type="checkbox"
+                        data-student-id="{{ student.id }}" {% if student.marks_visible %}checked{% endif %}>
+                    </td>
+                    {% endif %}
+                    {% if request.user.teacher.is_sub_admin and not hod_check or request.user.is_superuser %}
+                    <td class="text-right">
+                      <div class="actions">
+                        <a href="{% url 'uniapp:studentupdate' student.pk %}" class="btn btn-sm bg-success-light mr-2">
+                          <i class="fas fa-pen"></i>
+                        </a>
+                        <a href="{% url 'uniapp:studentdelete' student.id %}" class="btn btn-sm bg-danger-light">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+                    {% endif %}
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+              <button class="btn btn-primary" type="submit">Update Semester</button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if request.user.teacher.is_sub_admin and hod_check != True or request.user.is_superuser %}
+    <h1>Subjects of the Semester</h1>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover table-center mb-0 datatable">
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                    <th>Teacher</th>
+                    <th class="text-right">Action</th>
+                  </tr>
+                </thead>
+                {% for subject in allocated_subejects %}
+                {% if subject.teacher != None %}
+
+                <tbody>
+                  <tr>
+                    <td>{{subject.subject}}</td>
+                    <td>
+                      <h2 class="table-avatar">
+                        <a href="{% url 'uniapp:teacherdetail' subject.teacher.pk %}" class="avatar avatar-sm mr-2"><img
+                            class="profile_pic rounded-circle" src="{{subject.teacher.profile_pic.url}}"
+                            alt="User Image"></a>
+                        <a
+                          href="{% url 'uniapp:teacherdetail' subject.teacher.pk %}">{{subject.teacher.teacher_name}}</a>
+                      </h2>
+                    </td>
+                    <td class="text-right">
+                      <div class="actions">
+                        <a href="edit-student.html" class="btn btn-sm bg-success-light mr-2">
+                          <i class="fas fa-pen"></i>
+                        </a>
+                        <a href="{% url 'uniapp:subjectallocationdelete' subject.pk %}"
+                          class="btn btn-sm bg-danger-light">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#selectAllCheckbox').change(function () {
+            var isChecked = $(this).prop('checked');
+            // Update the state of all marks_visible checkboxes within student rows
+            $('.marksVisibilityCheckbox').prop('checked', isChecked).trigger('change');
+        });
+
+        $('.marksVisibilityCheckbox').change(function () {
+            var isChecked = $(this).prop('checked');
+            var studentId = $(this).data('student-id');
+            // Call the function to update marks visibility for an individual student
+            updateMarksVisibility(studentId, isChecked);
+        });
+
+       
+
+        function updateMarksVisibility(studentId, isChecked) {
+            $.ajax({
+                type: 'POST',
+                url: '{% url "uniapp:studentlist" semester_id=semester.id %}',
+                data: {
+                    'student_id': studentId,
+                    'marks_visible': isChecked,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Marks visibility updated for individual student successfully');
+                    }
+                },
+                error: function (error) {
+                    console.log('Error:', error);
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock body %}
