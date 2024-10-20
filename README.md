@@ -1,0 +1,1 @@
+Hello. This is my final year project which is LMS(Learning Management System). This is a web base application in which we can manage the data of the university including number of teachers, number of students. Add can also manage the marks of the students. You can also take the attendance of the students.
